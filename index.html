@@ -2,8 +2,6 @@
 <html>
 <head>
     <title>COMIKAGI</title>
-
-    <!-- IMPORTANT FOR MOBILE RESPONSIVENESS -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
@@ -15,10 +13,11 @@
 
         body {
             min-height: 100vh;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
             background-size: cover;
-            background-position: center;
+            background-position: center center;
             background-repeat: no-repeat;
+            background-attachment: fixed;
             animation: slideshow 12s infinite;
             display: flex;
             flex-direction: column;
@@ -33,109 +32,81 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 5%;
+            padding: 18px 40px;
             z-index: 1000;
+            backdrop-filter: blur(6px);
         }
 
         .logo {
             color: white;
-            font-size: 14px;
+            font-size: 18px;
             font-weight: bold;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        /* ===== HAMBURGER ===== */
+        .menu-toggle {
+            display: none;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s ease;
         }
 
         nav ul {
             list-style: none;
             display: flex;
-            gap: 15px;
+            gap: 25px;
         }
 
         nav ul li a {
             text-decoration: none;
             color: white;
-            font-size: 13px;
-            padding: 6px 10px;
-            position: relative;
+            font-size: 14px;
+            padding: 8px 16px;
             transition: 0.3s ease;
+            border-radius: 25px;
         }
 
         nav ul li a:hover {
-            background-color: rgba(0, 195, 255, 0.2);
-            border-radius: 4px;
-            color: #00c3ff;
-        }
-
-        nav ul li a::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0%;
-            height: 2px;
             background: #00c3ff;
-            transition: 0.3s ease;
-        }
-
-        nav ul li a:hover::after {
-            width: 100%;
+            color: black;
         }
 
         /* ===== OVERLAY ===== */
         .overlay {
             flex: 1;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.55);
             color: white;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 120px 20px 20px 20px;
+            padding-top: 120px;
             text-align: center;
         }
 
         .overlay h1 {
-            font-size: 32px;
-        }
-
-        /* ===== IMAGE CAROUSEL ===== */
-        .image-carousel {
-            width: 100%;
-            overflow: hidden;
-            background: #000;
-            padding: 10px 0;
-        }
-
-        .image-track {
-            display: flex;
-            gap: 15px;
-            animation: scroll 30s linear infinite;
-        }
-
-        .image-track img {
-            height: 80px;
-            border-radius: 5px;
-        }
-
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            font-size: 42px;
+            letter-spacing: 2px;
         }
 
         /* ===== FOOTER ===== */
         footer {
-            background: rgba(0, 0, 0, 0.95);
+            background: #000;
             color: white;
-            padding: 15px 5%;
-            font-size: 12px;
+            padding: 15px 6%;
+            font-size: 13px;
         }
 
         .footer-container {
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 20px;
         }
 
         .footer-section {
-            flex: 1;
+            width: 45%;
             min-width: 200px;
         }
 
@@ -150,63 +121,10 @@
             text-decoration: none;
         }
 
-        footer a:hover {
-            text-decoration: underline;
-        }
-
         .contact-grid, .location-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 4px 10px;
-        }
-
-        /* ===== RESPONSIVE DESIGN ===== */
-
-        /* Tablets */
-        @media (max-width: 992px) {
-            nav ul {
-                gap: 10px;
-            }
-
-            .overlay h1 {
-                font-size: 26px;
-            }
-
-            .image-track img {
-                height: 70px;
-            }
-        }
-
-        /* Phones */
-        @media (max-width: 600px) {
-
-            header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-
-            nav ul {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            nav ul li a {
-                padding: 8px;
-                width: 100%;
-            }
-
-            .overlay h1 {
-                font-size: 22px;
-            }
-
-            .contact-grid, .location-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .image-track img {
-                height: 60px;
-            }
         }
 
         /* ===== BACKGROUND SLIDESHOW ===== */
@@ -217,21 +135,89 @@
             100% { background-image: url("image1.png"); }
         }
 
+        /* ================= MOBILE ================= */
+        @media (max-width: 768px) {
+
+            body {
+                background-size: cover;
+                background-position: center;
+                background-attachment: scroll;
+            }
+
+            header {
+                padding: 15px 20px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            nav {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.95);
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.5s ease;
+            }
+
+            nav.active {
+                max-height: 400px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                padding: 10px 0;
+            }
+
+            nav ul li {
+                text-align: center;
+            }
+
+            nav ul li a {
+                padding: 15px;
+                display: block;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .footer-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .footer-section {
+                width: 100%;
+            }
+
+            .overlay h1 {
+                font-size: 28px;
+            }
+        }
+
     </style>
 </head>
 
 <body>
 
 <header>
-    <div class="logo">COOPERATIVE MINIERE KABABARA ET GIKINGO</div>
+    <div class="logo" id="logoText">
+        COOPERATIVE MINIERE KABABARA ET GIKINGO
+    </div>
 
-    <nav>
+    <div class="menu-toggle" id="menuToggle">☰</div>
+
+    <nav id="navMenu">
         <ul>
             <li><a href="#">HOME</a></li>
-            <li><a href="about.html">ABOUT</a></li>
-            <li><a href="services.html">SERVICES</a></li>
-            <li><a href="our_work.html">OUR WORK</a></li>
-            <li><a href="publication.html">PUBLICATION</a></li>
+            <li><a href="#">ABOUT</a></li>
+            <li><a href="#">SERVICES</a></li>
+            <li><a href="#">OUR WORK</a></li>
+            <li><a href="#">PUBLICATION</a></li>
         </ul>
     </nav>
 </header>
@@ -240,36 +226,8 @@
     <h1>WELCOME TO COMIKAGI</h1>
 </div>
 
-<div class="image-carousel">
-    <div class="image-track">
-        <img src="image4.jpeg">
-        <img src="image5.jpeg">
-        <img src="image6.jpeg">
-        <img src="image7.jpeg">
-        <img src="image8.jpeg">
-        <img src="image9.jpeg">
-        <img src="image10.jpeg">
-        <img src="image11.jpeg">
-        <img src="image12.jpeg">
-        <img src="image13.jpeg">
-
-        <!-- Duplicate -->
-        <img src="image4.jpeg">
-        <img src="image5.jpeg">
-        <img src="image6.jpeg">
-        <img src="image7.jpeg">
-        <img src="image8.jpeg">
-        <img src="image9.jpeg">
-        <img src="image10.jpeg">
-        <img src="image11.jpeg">
-        <img src="image12.jpeg">
-        <img src="image13.jpeg">
-    </div>
-</div>
-
 <footer>
     <div class="footer-container">
-
         <div class="footer-section">
             <h3>CONTACTS</h3>
             <div class="contact-grid">
@@ -278,11 +236,7 @@
                 <p><strong>TEL:</strong></p>
                 <p>+250783419757</p>
                 <p><strong>EMAIL:</strong></p>
-                <p>
-                    <a href="https://mail.google.com/mail/?view=cm&to=comikagi2030@gmail.com" target="_blank">
-                        comikagi2030@gmail.com
-                    </a>
-                </p>
+                <p><a href="mailto:comikagi2030@gmail.com">comikagi2030@gmail.com</a></p>
             </div>
         </div>
 
@@ -295,9 +249,43 @@
                 <p>GIKINGO CELL</p>
             </div>
         </div>
-
     </div>
 </footer>
+
+<script>
+    const menuToggle = document.getElementById("menuToggle");
+    const navMenu = document.getElementById("navMenu");
+    const navLinks = document.querySelectorAll("nav ul li a");
+    const logoText = document.getElementById("logoText");
+
+    function checkScreen() {
+        if (window.innerWidth <= 768) {
+            logoText.textContent = "COMIKAGI";
+        } else {
+            logoText.textContent = "COOPERATIVE MINIERE KABABARA ET GIKINGO";
+        }
+    }
+
+    checkScreen();
+    window.addEventListener("resize", checkScreen);
+
+    menuToggle.addEventListener("click", () => {
+        navMenu.classList.toggle("active");
+
+        if (navMenu.classList.contains("active")) {
+            menuToggle.textContent = "✕";
+        } else {
+            menuToggle.textContent = "☰";
+        }
+    });
+
+    navLinks.forEach(link => {
+        link.addEventListener("click", () => {
+            navMenu.classList.remove("active");
+            menuToggle.textContent = "☰";
+        });
+    });
+</script>
 
 </body>
 </html>
